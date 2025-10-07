@@ -1,4 +1,4 @@
-name: Node.js CI Pipeline
+name: Node.js CI + SonarCloud
 
 on:
   push:
@@ -9,7 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [18.x]
@@ -29,8 +28,16 @@ jobs:
       - name: Run lint
         run: npm run lint --if-present
 
-      - name: Run tests
-        run: npm test --if-present
+      - name: Run tests with coverage
+        run: npm test -- --coverage
 
       - name: Security audit
         run: npm audit --audit-level=high
+
+      # SonarCloud scan
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          projectKey: ST10407732_INSY7314_poe_part2
+          organization: ST10407732
+          token: ${{ secrets.SONAR_TOKEN }}
