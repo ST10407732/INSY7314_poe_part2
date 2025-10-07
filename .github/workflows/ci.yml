@@ -14,41 +14,47 @@ jobs:
         node-version: [18.x]
 
     steps:
+      # 1️⃣ Checkout the repo
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # 2️⃣ Setup Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
-      # Backend
+      # 3️⃣ Install backend dependencies
       - name: Install backend dependencies
-        working-directory: INSY7314_poe_part2/backend
+        working-directory: backend
         run: npm install
 
-      - name: Run backend tests with coverage
-        working-directory: INSY7314_poe_part2/backend
-        run: npm test -- --coverage
-
-      - name: Security audit (backend)
-        working-directory: INSY7314_poe_part2/backend
-        run: npm audit --audit-level=high
-
-      # Frontend
+      # 4️⃣ Install frontend dependencies
       - name: Install frontend dependencies
-        working-directory: INSY7314_poe_part2/frontend
+        working-directory: frontend
         run: npm install
 
-      - name: Run frontend tests with coverage
-        working-directory: INSY7314_poe_part2/frontend
+      # 5️⃣ Run backend tests with coverage
+      - name: Run backend tests with coverage
+        working-directory: backend
         run: npm test -- --coverage
 
+      # 6️⃣ Run frontend tests with coverage
+      - name: Run frontend tests with coverage
+        working-directory: frontend
+        run: npm test -- --coverage
+
+      # 7️⃣ Run lint (frontend)
       - name: Run lint (frontend)
-        working-directory: INSY7314_poe_part2/frontend
+        working-directory: frontend
         run: npm run lint --if-present
 
-      # SonarCloud scan
+      # 8️⃣ Security audit (backend)
+      - name: Security audit (backend)
+        working-directory: backend
+        run: npm audit --audit-level=high
+
+      # 9️⃣ SonarCloud scan
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
         with:
