@@ -22,17 +22,23 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      # Backend
       - name: Install backend dependencies
         working-directory: backend
-        run: npm install
-
-      - name: Install frontend dependencies
-        working-directory: frontend
         run: npm install
 
       - name: Run backend tests with coverage
         working-directory: backend
         run: npm test -- --coverage
+
+      - name: Security audit (backend)
+        working-directory: backend
+        run: npm audit --audit-level=high
+
+      # Frontend
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm install
 
       - name: Run frontend tests with coverage
         working-directory: frontend
@@ -42,10 +48,7 @@ jobs:
         working-directory: frontend
         run: npm run lint --if-present
 
-      - name: Security audit (backend)
-        working-directory: backend
-        run: npm audit --audit-level=high
-
+      # SonarCloud scan
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
         with:
