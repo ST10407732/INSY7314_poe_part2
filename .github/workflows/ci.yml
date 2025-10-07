@@ -30,14 +30,6 @@ jobs:
         working-directory: frontend
         run: npm install
 
-      - name: Run backend lint
-        working-directory: backend
-        run: npm run lint --if-present
-
-      - name: Run frontend lint
-        working-directory: frontend
-        run: npm run lint --if-present
-
       - name: Run backend tests with coverage
         working-directory: backend
         run: npm test -- --coverage
@@ -46,12 +38,12 @@ jobs:
         working-directory: frontend
         run: npm test -- --coverage
 
-      - name: Security audit backend
-        working-directory: backend
-        run: npm audit --audit-level=high
-
-      - name: Security audit frontend
+      - name: Run lint (frontend)
         working-directory: frontend
+        run: npm run lint --if-present
+
+      - name: Security audit (backend)
+        working-directory: backend
         run: npm audit --audit-level=high
 
       - name: SonarCloud Scan
