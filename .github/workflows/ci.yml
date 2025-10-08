@@ -30,9 +30,9 @@ jobs:
         run: npm install
 
       # 4️⃣ Install frontend dependencies
-      - name: Install frontend dependencies
-        working-directory: frontend
-        run: npm install
+      #- name: Install frontend dependencies
+       # working-directory: frontend
+       # run: npm install
 
       # 5️⃣ Run backend tests with coverage
       - name: Run backend tests with coverage
