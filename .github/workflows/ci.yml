@@ -29,33 +29,24 @@ jobs:
         working-directory: backend
         run: npm install
 
-      # 🚫 Skipping frontend dependencies and tests for now
-      # - name: Install frontend dependencies
-      #   working-directory: frontend
-      #   run: npm install
-
-      # - name: Run frontend tests with coverage
-      #   working-directory: frontend
-      #   run: npm test -- --coverage --passWithNoTests
-
-      # - name: Run lint (frontend)
-      #   working-directory: frontend
-      #   run: npm run lint --if-present
-
-      # 5️⃣ Run backend tests with coverage
+      # 4️⃣ Run backend tests with coverage
       - name: Run backend tests with coverage
         working-directory: backend
         run: npm test -- --coverage --passWithNoTests
 
-      # 6️⃣ Security audit (backend)
+      # 5️⃣ Security audit (backend)
       - name: Security audit (backend)
         working-directory: backend
         run: npm audit --audit-level=high
 
-      # 7️⃣ SonarCloud scan
+      # 6️⃣ SonarCloud scan
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          projectKey: ST10407732_INSY7314_poe_part2
-          organization: ST10407732
-          token: ${{ secrets.SONAR_TOKEN }}
+          args: >
+            -Dsonar.projectKey=ST10407732_INSY7314_poe_part2
+            -Dsonar.organization=st10407732
+            -Dsonar.javascript.lcov.reportPaths=backend/coverage/lcov.info
+            -Dsonar.sources=.
