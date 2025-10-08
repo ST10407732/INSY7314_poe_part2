@@ -48,4 +48,6 @@ jobs:
           args: >
             -Dsonar.projectKey=ST10407732_INSY7314_poe_part2
             -Dsonar.organization=st10407732
-            -Dsonar.sources=.
+            -Dsonar.sources=backend
+            -Dsonar.tests=backend/__tests__
+            -Dsonar.javascript.lcov.reportPaths=backend/coverage/lcov.info
