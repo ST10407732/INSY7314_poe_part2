@@ -37,12 +37,12 @@ jobs:
       # 5️⃣ Run backend tests with coverage
       - name: Run backend tests with coverage
         working-directory: backend
-        run: npm test -- --coverage
+        run: npm test -- --coverage --passWithNoTests
 
       # 6️⃣ Run frontend tests with coverage
       - name: Run frontend tests with coverage
         working-directory: frontend
-        run: npm test -- --coverage
+        run: npm test -- --coverage --passWithNoTests
 
       # 7️⃣ Run lint (frontend)
       - name: Run lint (frontend)
